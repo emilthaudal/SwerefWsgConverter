@@ -56,7 +56,7 @@ await foreach (var item in lines)
     SWEREF99Position pos = new SWEREF99Position(longi, lati);
     var wgsPos = pos.ToWGS84();
 
-    var outputLine = $"{identifier},{wgsPos.Latitude}, {wgsPos.Latitude}";
+    var outputLine = $"{identifier},{wgsPos.Longitude.ToString().Replace(',', '.')}, {wgsPos.Latitude.ToString().Replace(',', '.')}";
     outputLines.Add( outputLine );
 }
 
