@@ -20,7 +20,7 @@ Stopwatch stopwatch = Stopwatch.StartNew();
 var lines = File.ReadLinesAsync(Path);
 
 List<string> outputLines = [];
-
+outputLines.Add("valm_id,Longitud,Latitud");
 bool header = true;
 await foreach (var item in lines)
 {
@@ -37,8 +37,8 @@ await foreach (var item in lines)
         return;
     }
     var identifier = fields[0];
-    var longitude = fields[1];
-    var latitude = fields[2];
+    var longitude = fields[1].Replace('.', ',');
+    var latitude = fields[2].Replace('.', ',');
 
     bool result = Double.TryParse(longitude, out double longi);
     if (!result)
@@ -53,10 +53,10 @@ await foreach (var item in lines)
     }
 
 
-    SWEREF99Position pos = new(longi, lati);
+    SWEREF99Position pos = new SWEREF99Position(longi, lati);
     var wgsPos = pos.ToWGS84();
 
-    var outputLine = $"{identifier},{wgsPos.Latitude},{wgsPos.Latitude}";
+    var outputLine = $"{identifier},{wgsPos.Latitude}, {wgsPos.Latitude}";
     outputLines.Add( outputLine );
 }
 
